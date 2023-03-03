@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".tutorial"
+    android:background="@drawable/background_listr"
+    android:orientation="vertical"
+    android:weightSum="6"
+    android:id="@+id/backgroundLayout">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="4">
+    <ImageView
+        android:id="@+id/imageExplain"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="2" />
+
+    <TextView
+        android:text=""
+        android:id="@+id/TextTutorialExplain"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:textStyle="bold"
+        android:textSize="20sp"/>
+</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/nextExample"
+            android:layout_width="184dp"
+            android:layout_height="67dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="200dp"
+            android:layout_marginEnd="200dp"
+            android:layout_weight="2"
+            android:background="@drawable/button_background"
+            android:gravity="center"
+            android:text="NEXT"
+            android:textSize="40dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+
+
+</LinearLayout>

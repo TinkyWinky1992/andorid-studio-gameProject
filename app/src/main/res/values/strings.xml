@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">PixelFight</string>
+    <string name="app_Game">PIXELFIGHT</string>
+    <string name="Startgame">START</string>
+    <string name="Stategame">STATES</string>
+    <string name="OptionGame">Options</string>
+    <string name="Enjoy">Enjoy Playing :D</string>
+    <string name="GameOver">GameOver</string>
+    <string name="share_max_score_player">score</string>
+    <string name="shared_pref_file_name">PixelFightPreferences</string>
+    <string name="musicmenutitle">MUSIC</string>
+    <string name="exitmenutitle">EXIT</string>
+    <string name="shared_pref_ismusicon">ismusicon</string>
+    <string name="settingsDialog">SETTINGS</string>
+    <string name="musicSwitchTitle">Music:</string>
+    <string name="backTomenu">Back</string>
+    <string name="pausedialog">Pause</string>
+</resources>

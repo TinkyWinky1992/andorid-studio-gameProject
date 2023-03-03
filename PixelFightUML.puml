@@ -1,0 +1,573 @@
+@startuml
+class com.example.movementplayer.Objects.Platform {
+- GameObject TargetObject
+- PlatformView platformView
+- GameDisplay gameDisplay
+~ int ScreenWidht
++ <<Create>> Platform(double,double,GameObject,PlatformView,int,GameDisplay)
++ void update(GameObject,GameObject)
++ void Draw(Canvas)
++ int getHeightImage()
++ int getWightImage()
+}
+class com.example.movementplayer.Animation.AnimatorPlayer {
+- int idxMovingRightFrames
+- int idxMovingLeftFrames
+- int idxMovingidleFrames
+- int idxMovingidleLeftFrames
+- int updateBeforeNextMove
+- int idxstartpunchRight
+- int idxstartpunchLeft
+- int idxDamgeRight
+- int idxDamgeLeft
+- int idxDeathRight
+- int idxDeathLeft
+- {static} int MAX_UPDATE_MOVING_FRAME
+- PlayerCharacter[] playerCharactersArray
++ <<Create>> AnimatorPlayer(PlayerCharacter[])
+- void drawFrame(Canvas,int,int,PlayerCharacter)
++ void draw(Canvas,int,int,Player)
+- void toggleDeathRight()
+- void toggleDeathLeft()
+- void toggleDamageRight(Player)
+- void toggleDamageLeft(Player)
+- void toggleIdxMovingFrame()
+- void toggleIdxIdleFrame()
+- void toggleIdxIdleLeftFrame()
+- void toggleMovingLeftFrame()
+- void togglePuchRightFrames(Player)
+- void togglePunchLeftFrames(Player)
++ float getcharacterSize()
+}
+class com.example.movementplayer.Objects.Enemy {
+- int speed_per_second
+- double Max_speed
+- {static} double GRAVITY
+- EnemyState enemyState
+- EnemyAnimation enemyAnimation
+- GameObject gameObjectTracker
+- Platform platform
+- boolean isneedNewPoint
+- boolean inRangeRight
+- boolean inRangeLeft
+- int move_RandomBetweenleftOrRight
+- int move_betweenDirectionX
+- HealthBar healthBar
+- AnimationHealthBar animationHealthBar
+- HealthBarState healthBarState
+- double distanceBetWeenObjectToEnemy
+- boolean isOnCollision
++ <<Create>> Enemy(EnemyAnimation,GameObject,HealingBarSprite,Platform,int)
++ {static} boolean readyToSpawn(HealthBar)
++ void update(GameObject,GameObject)
+- boolean OnPlatForm(GameObject)
++ void Draw(Canvas)
++ double getlastlocation()
++ EnemyState getEnemyState()
++ HealthBar getHealthBar()
++ boolean isOnCollision()
++ double getDistanceBetWeenObjectToEnemy()
+}
+class com.example.movementplayer.MyReceiver {
++ void onReceive(Context,Intent)
+}
+class com.example.movementplayer.ImageSnippingTool.PlatformView {
+- PlatformSprite Platformsprite
++ <<Create>> PlatformView(PlatformSprite)
++ void draw(Canvas,double,double)
++ PlatformSprite getPlatformsprite()
+}
+class com.example.movementplayer.GamePanel.GameLoop {
+- {static} double MAX_UPS
+- {static} double UPS_PERIOD
+- boolean isRunning
+- SurfaceHolder surfaceHolder
+- GameView gameView
+- int averageFPS
+- int averageUPS
+- int TimeInSecond
+- int TimeInMinute
++ <<Create>> GameLoop(GameView,SurfaceHolder)
++ int getAverageFPS()
++ int getTimeInMinute()
++ int getTimeInSecond()
++ void startLoop()
++ void UpdateIsGameOver()
++ void run()
+}
+class com.example.movementplayer.StateObject.EnemyState {
+- Enemy enemy
+- EnemyState.State state
+- boolean Punched
++ <<Create>> EnemyState(Enemy)
++ void updateMoving()
++ EnemyState.State getState()
++ void setState(State)
++ void setPunched(boolean)
++ boolean isPunched()
+}
+enum com.example.movementplayer.StateObject.State {
++  NOT_MOVING_RIGHT
++  NOT_MOVING_LEFT
++  START_MOVING_LEFT
++  START_MOVING_RIGHT
++  IS_MOVING_LEFT
++  IS_MOVING_RIGHT
++  IS_PUNCH_RIGHT
++  START_PUNCH_RIGHT
++  START_PUNCH_LEFT
++  IS_PUNCH_LEFT
++  DAMAGED_RIGHT
++  DAMAGED_LEFT
+}
+class com.example.movementplayer.Menu {
+- {static} int READ_PHONE_STATE_PERMISSION
+~ LinearLayout MenuLayout
+- ServiceScreen serviceScreen
+- View decorView
+- Button btnStartGame
+- Button btnStateGame
+- Button btnOptionGame
+- Intent serviceIntent
+- ImageButton menubtn
+- Button btntomenu
+- Switch musicSwitch
+- boolean ismusicChecked
+- Dialog dialogmenu
++ void registervariables()
+# void onCreate(Bundle)
++ void animation_background(LinearLayout)
++ void onWindowFocusChanged(boolean)
+# void onResume()
+# void onPause()
++ void onClick(View)
+- void showMenuIcons(PopupMenu)
+- void PlayAudio()
+- void StopAudio()
++ boolean onMenuItemClick(MenuItem)
+- void phonePermission()
++ void onRequestPermissionsResult(int,String[],int[])
+}
+class com.example.movementplayer.tutorial {
+~ LinearLayout mainLayout
+~ ImageView imageViewExplain
+~ TextView textViewExplain
+~ Button btnNext
+- CharSequence charSequence
+- ServiceScreen serviceScreen
+- View decorView
+~ ArrayList<Integer> arrayListImage
+- int index
+- long delay
+- int counterOfImages
+- Handler handler
+~ Runnable runanim
++ void log()
+# void onCreate(Bundle)
+- void TextAnimation(CharSequence)
++ void SetTextExample()
++ void onClick(View)
++ void onWindowFocusChanged(boolean)
+# void onResume()
+# void onPause()
+}
+class com.example.movementplayer.ServiceScreen {
+- View decorView
++ <<Create>> ServiceScreen(View)
++ void hideSystemBars()
+}
+class com.example.movementplayer.Sprite.EnemySprite {
+~ Bitmap bitmap
+- int EnemySize
++ <<Create>> EnemySprite(Context,int,int)
++ EnemyView[] getEnemySprite()
++ Bitmap getBitmap()
+}
+class com.example.movementplayer.Objects.HealthBar {
+- HealthBarState state
+- AnimationHealthBar animationHealthBar
+- int Health
+- boolean ActiviteChangeState
++ <<Create>> HealthBar(double,double,GameObject,AnimationHealthBar)
++ HealthBarState getHealthBarState()
++ void setActiviteChangeState(boolean)
++ boolean isActiviteChangeState()
++ void update(GameObject,GameObject)
++ void Draw(Canvas)
++ int getHealth()
+}
+class com.example.movementplayer.settingsgame {
+~ ConstraintLayout mainLayout
+~ Button btnplaygame
+~ Button btnTutorial
+~ Button Gobackbtn
+- ServiceScreen serviceScreen
+- View decorView
+- void log()
+# void onCreate(Bundle)
++ void animation_background(ConstraintLayout)
++ void onWindowFocusChanged(boolean)
+# void onResume()
+# void onPause()
++ void onClick(View)
+}
+class com.example.movementplayer.Objects.Player {
+- int speed_per_second
+- double Max_speed
+- {static} double GRAVITY
+- Joystick joystick
+- PunchBtn punchBtn
+- Jumpbtn jumpbtn
+- AnimatorPlayer PlayerAnimate
+- PlayerState playerState
+- double jumpvelocity
+- HealthBar healthBar
+- AnimationHealthBar animationHealthBar
+- HealthBarState healthBarState
++ <<Create>> Player(double,double,Joystick,PunchBtn,Jumpbtn,AnimatorPlayer,HealingBarSprite,int)
++ void Draw(Canvas)
++ void update(GameObject,GameObject)
+- boolean OnPlatForm(GameObject)
++ double getlastlocation()
++ PlayerState getPlayerState()
++ PunchBtn getPunchBtn()
++ HealthBar getHealthBar()
+}
+class com.example.movementplayer.Sprite.PlayerCharacterSprite {
+~ Bitmap bitmap
+- int PlayerSize
++ <<Create>> PlayerCharacterSprite(Context,int,int)
++ PlayerCharacter[] getPlayerSprite()
++ Bitmap getBitmap()
+}
+class com.example.movementplayer.load {
+- TextView EnjoyText
+- Button buttonStart
+- CharSequence charSequence
+- ServiceScreen serviceScreen
+- View decorView
+- int index
+- long delay
+- Handler handler
+~ Runnable runanim
++ void registervariables()
+# void onCreate(Bundle)
++ void TextAnimation(CharSequence)
++ void animation_background()
++ void ToGameScreen(View)
+- void openMainActivity()
++ void onClick(View)
++ void onWindowFocusChanged(boolean)
+# void onResume()
+# void onPause()
+}
+class com.example.movementplayer.MainActivity {
+- View decorView
+- FrameLayout Background
+- GameView game
+- ServiceScreen serviceScreen
+- Button backmenubtn
+- TextView SurvivedScoreText
+- Dialog dialog
+- String TempTextSurvivedScore
+- SharedPreferences sharedPref
+- SharedPreferences.Editor editor
++ {static} String EXTRA_LEVEl
++ Handler GameOverHandler
++ void log()
+# void onCreate(Bundle)
+- void ShowEndDialog()
++ void onWindowFocusChanged(boolean)
+# void onResume()
+# void onPause()
++ void onClick(View)
+}
+class com.example.movementplayer.ImageSnippingTool.HealingBarView {
+- HealingBarSprite healingBarSprite
+- Rect rects
++ <<Create>> HealingBarView(HealingBarSprite,Rect)
++ void draw(Canvas,int,int)
++ int getHeight()
++ int getWidth()
++ Rect getRects()
+}
+class com.example.movementplayer.GamePanel.GameView {
+- HealingBarSprite healingBarSprite
+- int screenWidht
+- int screenHeight
+- GameLoop gameLoop
+- Context context
+- Joystick joystick
+- Jumpbtn jumpbtn
+- PunchBtn punchBtn
+- Player player
+- AnimatorPlayer Animator
+- PlayerState playerState
+- List<Enemy> enemies
+- EnemyAnimation enemyAnimation
+- EnemyState enemyState
+- GameDisplay gameDisplay
+- PlatformView platformView
+- Platform platform
+- double ScreenXsize
++ {static} String averageTimer
+- boolean isgameOver
+- Handler GameOverDialog
++ <<Create>> GameView(Context,int,int,Handler)
++ void surfaceCreated(SurfaceHolder)
++ void surfaceChanged(SurfaceHolder,int,int,int)
++ void surfaceDestroyed(SurfaceHolder)
++ boolean onTouchEvent(MotionEvent)
++ void draw(Canvas)
+- void drawFPS(Canvas)
+- void Timer(Canvas)
++ String getTimer()
++ void update()
++ boolean isIsgameOver()
++ Handler getGameOverDialog()
+}
+abstract class com.example.movementplayer.Objects.GameObject {
+# double positionX
+# double positionY
+# double velocityX
+# double velocityY
+# boolean isonplatform
+# int WightImage
+# int HeightImage
+# double lastplayerlocation
++ <<Create>> GameObject(double,double,boolean)
+# {static} double getdistancebetweenThePlayer(GameObject,GameObject)
+~ {abstract}void update(GameObject,GameObject)
+~ {abstract}void Draw(Canvas)
++ double getPositionX()
++ double getPositionY()
++ double getVelocityX()
++ double getVelocityY()
++ boolean isIsonplatform()
++ int getHeightImage()
++ int getWightImage()
++ double getlastlocation()
+}
+class com.example.movementplayer.StateObject.HealthBarState {
+- GameObject HealthStateObject
+- HealthBarState.State state
+- HealthBarState.State LastState
+- boolean ischange
++ <<Create>> HealthBarState(GameObject)
++ void setIschange(boolean)
++ boolean isChange()
++ HealthBarState.State getState()
++ void SetState(State)
+}
+enum com.example.movementplayer.StateObject.State {
++  FULL_HP
++  ABOUT_FULL_HP
++  HALF_HP
++  LOW_HP
++  NON_HP
+}
+class com.example.movementplayer.Buttens.Jumpbtn {
+- double positionX
+- double positionY
+- double Radius
+- Paint paint
+- boolean Isjump
++ <<Create>> Jumpbtn(Context,double,double,double)
++ void draw(Canvas)
++ void isPressedJump(double,double)
++ void setisJump(boolean)
++ boolean isJump()
++ Paint getPaint()
+}
+class com.example.movementplayer.Animation.AnimationHealthBar {
+- int idxFrame
+- HealingBarView[] healingBarView
++ <<Create>> AnimationHealthBar(HealingBarView[])
+- void drawFrame(Canvas,int,int,HealingBarView)
++ void draw(Canvas,double,double,HealthBar)
++ int getWidth()
+}
+class com.example.movementplayer.StateObject.PlayerState {
+- Player gameObjectState
+- State state
++ <<Create>> PlayerState(Player)
++ void updateMoving(PunchBtn,HealthBar,AnimatorPlayer)
++ void SetState(PlayerState.State)
++ State getState()
+}
+enum com.example.movementplayer.StateObject.State {
++  NOT_MOVING_RIGHT
++  NOT_MOVING_LEFT
++  START_MOVING_LEFT
++  START_MOVING_RIGHT
++  IS_MOVING_LEFT
++  IS_MOVING_RIGHT
++  IS_PUNCH_RIGHT
++  START_PUNCH_RIGHT
++  START_PUNCH_LEFT
++  IS_PUNCH_LEFT
++  DAMAGED_RIGHT
++  DAMAGED_LEFT
++  START_DEATH_RIGHT
++  IS_DEATH_RIGHT
++  START_DEATH_LEFT
++  IS_DEATH_LEFT
+}
+class com.example.movementplayer.MyService {
+~ MediaPlayer mediaPlayer
+~ int linkone
++ <<Create>> MyService()
++ int onStartCommand(Intent,int,int)
++ void onDestroy()
++ IBinder onBind(Intent)
++ void onCompletion(MediaPlayer)
++ boolean onError(MediaPlayer,int,int)
++ boolean onInfo(MediaPlayer,int,int)
++ void onPrepared(MediaPlayer)
+}
+class com.example.movementplayer.Buttens.PunchBtn {
+- double positionX
+- double positionY
+- double Radius
+- Paint paint
+- boolean IsPunch
++ <<Create>> PunchBtn(Context,double,double,double)
++ void draw(Canvas)
++ void isPressedPunch(double,double)
++ void setisPunch(boolean)
++ boolean isPunch()
++ double getPositionX()
++ double getPositionY()
++ double getRadius()
+}
+class com.example.movementplayer.Sprite.HealingBarSprite {
+~ Bitmap bitmap
+- int HealthBarSizeHeight
+- int HealthBarSizeWidth
++ <<Create>> HealingBarSprite(Context,int,int)
++ HealingBarView[] getHealingBarView()
++ Bitmap getBitmap()
+}
+class com.example.movementplayer.GamePanel.GameDisplay {
++ {static} Rect DISPLAYRECT
+- int WorldsizeX
+- int WorldsizeY
+- Bitmap bitmapArena
+- int gameCenterX
+- int gameCenterY
+- GameObject centerObject
++ <<Create>> GameDisplay(Context,int,int,GameObject)
++ void update()
++ void drawBackGround(Canvas)
++ int getWorldsizeX()
++ int getWorldsizeY()
+}
+class com.example.movementplayer.StatePlayer {
+~ TextView scoreView
+~ Button GobackBtn
+~ SharedPreferences sharedPreferences
+~ SharedPreferences.Editor editor
++ void log()
+# void onCreate(Bundle)
+}
+class com.example.movementplayer.Animation.EnemyAnimation {
+- {static} int MAX_UPDATE_MOVING_FRAME
+- int idxMovingRightFrames
+- int idxMovingLeftFrames
+- int idxMovingidleFrames
+- int idxMovingidleLeftFrames
+- int updateBeforeNext
+- int idxstartpunchRight
+- int idxstartpunchLeft
+- int idxstartDamagedRight
+- int idxstartDamagedLeft
+- EnemyView[] EnemySpritesArray
++ <<Create>> EnemyAnimation(EnemyView[])
+- void drawFrame(Canvas,int,int,EnemyView)
++ void draw(Canvas,int,int,Enemy)
+- void toggleDamageFramesRight()
+- void toggleDamageFramesLeft()
+- void togglePunchLeftFrames(Enemy)
+- void togglePunchRightFrames(Enemy)
+- void toggleIdxMovingFrame()
+- void toggleIdxIdleFrame()
+- void toggleIdxIdleLeftFrame()
+- void toggleMovingLeftFrame()
++ float getcharacterSize()
+}
+class com.example.movementplayer.ImageSnippingTool.PlayerCharacter {
+- PlayerCharacterSprite playerMain
+- Rect rects
++ <<Create>> PlayerCharacter(PlayerCharacterSprite,Rect)
++ void draw(Canvas,int,int)
++ int getHeight()
++ Rect getRects()
+}
+class com.example.movementplayer.Buttens.Joystick {
+- float outerCircleCenterPositionX
+- float outerCircleCenterPositionY
+- float innerCircleCeneterPostionX
+- float innerCircleCeneterPostionY
+- int dpH
+- int dpW
+- float outerCircleRadius
+- float innerCircleRadius
+- Paint outerCirclePaint
+- Paint innerCirclePaint
+- double joystickCenterToTouchDistance
+- boolean isPressed
+- double actuatorX
+- double actuatorY
++ <<Create>> Joystick(float,float,float,int,int,int)
++ void setIsPressed(boolean)
++ void draw(Canvas)
++ void update()
+- void updateInnerCirclePosition()
++ boolean isPressed(double,double)
++ boolean getIsPressed()
++ void setActuator(double,double,double)
++ void resetActuator()
++ double getActuatorX()
++ double getActuatorY()
+}
+class com.example.movementplayer.ImageSnippingTool.EnemyView {
+- EnemySprite EnemyImage
+- Rect rects
++ <<Create>> EnemyView(EnemySprite,Rect)
++ void draw(Canvas,int,int)
++ int getHeight()
++ Rect getRects()
+}
+class com.example.movementplayer.Sprite.PlatformSprite {
+~ Bitmap bitmap
++ <<Create>> PlatformSprite(Context,int,int)
++ Bitmap getBitmap()
+}
+
+
+com.example.movementplayer.Objects.GameObject <|-- com.example.movementplayer.Objects.Platform
+com.example.movementplayer.Objects.GameObject <|-- com.example.movementplayer.Objects.Enemy
+android.content.BroadcastReceiver <|-- com.example.movementplayer.MyReceiver
+com.example.movementplayer.GamePanel.Thread <|-- com.example.movementplayer.GamePanel.GameLoop
+com.example.movementplayer.OnClickListener <|.. com.example.movementplayer.Menu
+com.example.movementplayer.OnMenuItemClickListener <|.. com.example.movementplayer.Menu
+androidx.appcompat.app.AppCompatActivity <|-- com.example.movementplayer.Menu
+com.example.movementplayer.OnClickListener <|.. com.example.movementplayer.tutorial
+androidx.appcompat.app.AppCompatActivity <|-- com.example.movementplayer.tutorial
+com.example.movementplayer.Objects.GameObject <|-- com.example.movementplayer.Objects.HealthBar
+com.example.movementplayer.OnClickListener <|.. com.example.movementplayer.settingsgame
+androidx.appcompat.app.AppCompatActivity <|-- com.example.movementplayer.settingsgame
+com.example.movementplayer.Objects.GameObject <|-- com.example.movementplayer.Objects.Player
+com.example.movementplayer.OnClickListener <|.. com.example.movementplayer.load
+androidx.appcompat.app.AppCompatActivity <|-- com.example.movementplayer.load
+com.example.movementplayer.OnClickListener <|.. com.example.movementplayer.MainActivity
+androidx.appcompat.app.AppCompatActivity <|-- com.example.movementplayer.MainActivity
+com.example.movementplayer.GamePanel.Callback <|.. com.example.movementplayer.GamePanel.GameView
+android.view.SurfaceView <|-- com.example.movementplayer.GamePanel.GameView
+com.example.movementplayer.OnCompletionListener <|.. com.example.movementplayer.MyService
+com.example.movementplayer.OnPreparedListener <|.. com.example.movementplayer.MyService
+com.example.movementplayer.OnInfoListener <|.. com.example.movementplayer.MyService
+com.example.movementplayer.OnErrorListener <|.. com.example.movementplayer.MyService
+android.app.Service <|-- com.example.movementplayer.MyService
+androidx.appcompat.app.AppCompatActivity <|-- com.example.movementplayer.StatePlayer
+@enduml
